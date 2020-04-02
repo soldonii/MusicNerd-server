@@ -55,11 +55,51 @@ exports.signup = async (req, res) => {
       errorMessage: '서버에서 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
     });
   }
-
 };
 
-exports.login = (req, res, next) => {
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
+    if (!user) {
+      return res.status(400).json({
+        errorMessage: '존재하지 않는 유저입니다. email 주소를 다시 확인해주세요.'
+      });
+    }
+
+    const passwordValidation = await bcrypt.compare(password, user.password);
+
+    if (!passwordValidation) {
+      return res.status(400).json({
+        errorMessage: '올바르지 않은 비밀번호입니다. 비밀번호를 다시 확인해주세요.'
+      });
+    }
+
+    const payload = { userId: user._id };
+
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: 1000 * 60 * 60 },
+      (err, token) => {
+        if (err) {
+          return res.status(500).json({
+            errorMessage: '서버에서 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
+          });
+        }
+
+        res.status(200).json({
+          token,
+          userId: user._id
+        });
+      }
+    );
+  } catch (error) {
+    res.status(500).json({
+      errorMessage: '서버에서 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
+    });
+  }
 };
 
 exports.logout = (req, res, next) => {

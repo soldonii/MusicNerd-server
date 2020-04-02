@@ -8,7 +8,7 @@ const validationErrorMessages = {
   PASSWORD_CONFIRMATION: '비밀번호가 일치하지 않습니다.'
 };
 
-const userValidationRules = () => [
+const getSignupValidationRules = () => [
   body('username', validationErrorMessages.USERNAME).exists().isLowercase(),
   body('gender', validationErrorMessages.GENDER).exists(),
   body('email', validationErrorMessages.EMAIL).exists().isEmail(),
@@ -16,6 +16,11 @@ const userValidationRules = () => [
   body('passwordConfirmation', validationErrorMessages.PASSWORD_CONFIRMATION)
     .exists()
     .custom((value, { req }) => value === req.body.password)
+];
+
+const getLoginValidationRules = () => [
+  body('email', validationErrorMessages.EMAIL).exists().isEmail(),
+  body('password', validationErrorMessages.PASSWORD).exists().isLength({ min: 6 })
 ];
 
 const validateUser = (req, res, next) => {
@@ -28,12 +33,12 @@ const validateUser = (req, res, next) => {
   const errorMessages = errors.array().map(err => err.msg);
 
   res.status(400).json({
-    result: 'fail',
     message: errorMessages
   });
 };
 
 module.exports = {
-  userValidationRules,
+  getSignupValidationRules,
+  getLoginValidationRules,
   validateUser
 };
