@@ -20,7 +20,6 @@ const songSchema = new Schema({
     height: Number,
     url: String,
     width: Number,
-    required: true
   },
   release_date: {
     type: String,

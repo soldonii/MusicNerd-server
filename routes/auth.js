@@ -6,7 +6,7 @@ const {
   getLoginValidationRules,
   validateUser
 } = require('../middlewares/validator');
-const authController = require('../controllers/auth.controllers');
+const authController = require('../controllers/auth.controller');
 
 router.post('/signup', getSignupValidationRules(), validateUser, authController.signup);
 

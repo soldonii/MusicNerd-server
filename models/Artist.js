@@ -12,7 +12,6 @@ const artistSchema = new Schema ({
     height: Number,
     url: String,
     width: Number,
-    required: true
   },
   name: {
     type: String,

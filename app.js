@@ -8,6 +8,7 @@ const logger = require('morgan');
 const cors = require('cors');
 
 const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user');
 
 const app = express();
 const server = http.createServer(app);
@@ -19,10 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', authRouter);
-
-// app.use('/', (req, res, next) => {
-//   res.json({ result: 'ok' });
-// });
+app.use('/users', userRouter);
 
 app.use((req, res, next) => {
   next(new Error('invalid url'));
