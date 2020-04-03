@@ -2,16 +2,13 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const songSchema = new Schema({
-  spotify_id: {
+const trackSchema = new Schema({
+  spotify_track_id: {
     type: String,
     required: true,
     unique: true
   },
-  title: {
-    type: String,
-    required: true
-  },
+  title: [String],
   album_type: {
     type: String,
     required: true
@@ -31,7 +28,7 @@ const songSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Song', songSchema);
+module.exports = mongoose.model('Track', trackSchema);
 
 
 

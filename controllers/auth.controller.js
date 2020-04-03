@@ -29,7 +29,7 @@ exports.signup = async (req, res) => {
           `${process.env.AMAZON_S3_URI}/user_profile/m_profile${Math.floor(Math.random()*3)}.png` :
           `${process.env.AMAZON_S3_URI}/user_profile/f_profile${Math.floor(Math.random()*3)}.png`,
         favorite_artists: [],
-        favorite_songs: [],
+        favorite_tracks: [],
         play_log: []
       });
 
@@ -109,10 +109,12 @@ exports.logout = (req, res, next) => {
 const axios = require('axios');
 const qs = require('querystring');
 const artists = require('../lib/artists');
+// const tracks = require('../lib/tracks');
 
 const Artist = require('../models/Artist');
+const Track = require('../models/Track');
 
-exports.saveArtistsAndSongs = async (req, res, next) => {
+exports.saveArtistsAndTracks = async (req, res, next) => {
   const headers = {
     headers: {
       Accept: 'application/json',
@@ -134,18 +136,39 @@ exports.saveArtistsAndSongs = async (req, res, next) => {
     const { access_token: token } = response.data;
 
     for (const artist in artists) {
-      const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${artists[artist]}`, {
+      const { spotifyArtistId, artistNameList, tracks } = artists[artist];
+      const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${spotifyArtistId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
-      const { id, images, name, genres } = artistResponse.data;
+      const { id, images, genres } = artistResponse.data;
+      const trackList = [];
+
+      for (const track of tracks) {
+        const trackResponse = await axios.get(`https://api.spotify.com/v1/tracks/${track.id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        const { album: { album_type, images, release_date }, id: trackId } = trackResponse.data;
+
+        const newTrack = await Track.create({
+          spotify_track_id: trackId,
+          title: track.titleList,
+          album_type,
+          thumbnail: images[0],
+          release_date,
+          audio_url: '123123'
+        });
+
+        trackList.push(newTrack._id);
+      }
 
       await Artist.create({
-        artist_id: id,
+        spotify_artist_id: id,
         thumbnail: images[0],
-        name,
+        name: artistNameList,
         genres,
-        songs: []
+        tracks: trackList
       });
     }
   } catch (error) {

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const artistSchema = new Schema ({
-  artist_id: {
+  spotify_artist_id: {
     type: String,
     required: true,
     unique: true
@@ -13,16 +13,11 @@ const artistSchema = new Schema ({
     url: String,
     width: Number,
   },
-  name: {
-    type: String,
-    required: true
-  },
-  genres: {
-    type: [String]
-  },
-  songs: [{
+  name: [String],
+  genres: [String],
+  tracks: [{
     type: Schema.Types.ObjectId,
-    ref: 'Song'
+    ref: 'Track'
   }]
 });
 

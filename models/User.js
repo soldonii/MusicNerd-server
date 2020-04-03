@@ -32,9 +32,9 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Artist'
   }],
-  favorite_songs: [{
+  favorite_tracks: [{
     type: Schema.Types.ObjectId,
-    ref: 'Song'
+    ref: 'Track'
   }],
   play_log: [{
     played_at: Date,
