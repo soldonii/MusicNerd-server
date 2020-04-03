@@ -105,3 +105,51 @@ exports.login = async (req, res) => {
 exports.logout = (req, res, next) => {
 
 };
+
+const axios = require('axios');
+const qs = require('querystring');
+const artists = require('../lib/artists');
+
+const Artist = require('../models/Artist');
+
+exports.saveArtistsAndSongs = async (req, res, next) => {
+  const headers = {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    auth: {
+      username: process.env.SPOTIFY_CLIENT_ID,
+      password: process.env.SPOTIFY_CLIENT_SECRET,
+    }
+  };
+
+  try {
+    const response = await axios.post(
+      'https://accounts.spotify.com/api/token',
+      qs.stringify({ grant_type: 'client_credentials' }),
+      headers
+    );
+
+    const { access_token: token } = response.data;
+
+    for (const artist in artists) {
+      const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${artists[artist]}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      const { id, images, name, genres } = artistResponse.data;
+
+      await Artist.create({
+        artist_id: id,
+        thumbnail: images[0],
+        name,
+        genres,
+        songs: []
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+

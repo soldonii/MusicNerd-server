@@ -6,6 +6,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const axios = require('axios');
 
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
