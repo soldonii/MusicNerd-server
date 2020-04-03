@@ -106,73 +106,86 @@ exports.logout = (req, res, next) => {
 
 };
 
-const axios = require('axios');
-const qs = require('querystring');
-const artists = require('../lib/artists');
-// const tracks = require('../lib/tracks');
+// const axios = require('axios');
+// const qs = require('querystring');
+// const artists = require('../lib/artists');
 
-const Artist = require('../models/Artist');
-const Track = require('../models/Track');
+// const Artist = require('../models/Artist');
+// const Track = require('../models/Track');
 
-exports.saveArtistsAndTracks = async (req, res, next) => {
-  const headers = {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    auth: {
-      username: process.env.SPOTIFY_CLIENT_ID,
-      password: process.env.SPOTIFY_CLIENT_SECRET,
-    }
-  };
+// exports.saveArtistsAndTracks = async (req, res, next) => {
+//   const headers = {
+//     headers: {
+//       Accept: 'application/json',
+//       'Content-Type': 'application/x-www-form-urlencoded',
+//     },
+//     auth: {
+//       username: process.env.SPOTIFY_CLIENT_ID,
+//       password: process.env.SPOTIFY_CLIENT_SECRET,
+//     }
+//   };
 
-  try {
-    const response = await axios.post(
-      'https://accounts.spotify.com/api/token',
-      qs.stringify({ grant_type: 'client_credentials' }),
-      headers
-    );
+//   try {
+//     const response = await axios.post(
+//       'https://accounts.spotify.com/api/token',
+//       qs.stringify({ grant_type: 'client_credentials' }),
+//       headers
+//     );
 
-    const { access_token: token } = response.data;
+//     const { access_token: token } = response.data;
 
-    for (const artist in artists) {
-      const { spotifyArtistId, artistNameList, tracks } = artists[artist];
-      const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${spotifyArtistId}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+//     for (const artist in artists) {
+//       const { spotifyArtistId, artistNameList, trackList } = artists[artist];
+//       const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${spotifyArtistId}`, {
+//         headers: { 'Authorization': `Bearer ${token}` }
+//       });
 
-      const { id, images, genres } = artistResponse.data;
-      const trackList = [];
+//       const { images: artistImageList, genres } = artistResponse.data;
+//       const tracks = [];
+//       let newArtist;
 
-      for (const track of tracks) {
-        const trackResponse = await axios.get(`https://api.spotify.com/v1/tracks/${track.id}`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+//       try {
+//         newArtist = await Artist.create({
+//           spotify_artist_id: spotifyArtistId,
+//           thumbnail: artistImageList[0],
+//           name: artistNameList,
+//           genres,
+//           tracks
+//         });
+//       } catch (err) {
+//         console.error('artist error', err);
+//       }
 
-        const { album: { album_type, images, release_date }, id: trackId } = trackResponse.data;
+//       for (const track of trackList) {
+//         const { trackId, titleList } = track;
+//         const trackResponse = await axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, {
+//           headers: { 'Authorization': `Bearer ${token}` }
+//         });
 
-        const newTrack = await Track.create({
-          spotify_track_id: trackId,
-          title: track.titleList,
-          album_type,
-          thumbnail: images[0],
-          release_date,
-          audio_url: '123123'
-        });
+//         const { album: { album_type, images: albumImageList, release_date } } = trackResponse.data;
 
-        trackList.push(newTrack._id);
-      }
+//         try {
+//           const newTrack = await Track.create({
+//             spotify_track_id: trackId,
+//             title: titleList,
+//             album_type,
+//             thumbnail: albumImageList[0],
+//             release_date,
+//             artist: newArtist._id,
+//             audio_url: '123123'
+//           });
 
-      await Artist.create({
-        spotify_artist_id: id,
-        thumbnail: images[0],
-        name: artistNameList,
-        genres,
-        tracks: trackList
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+//           tracks.push(newTrack._id);
+//         } catch (err) {
+//           console.error('track error', err);
+//         }
+//       }
+
+//       await newArtist.updateOne({ tracks });
+//     }
+//     console.log('all artists and tracks are saved successfully!');
+//   } catch (err) {
+//     console.error(err)
+//   }
+// };
 
