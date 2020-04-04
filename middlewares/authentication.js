@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-  const token = req.header('x-auth-token');
+  const token = req.header('x-access-token');
 
   if (!token) {
     return res.status(401).json({
-      message: '인증되지 않은 유저입니다.'
+      errorMessage: 'Unauthorized user.'
     });
   }
 
@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
     next();
   } catch (err) {
     res.status(401).json({
-      message: '유효하지 않은 토큰입니다.'
+      errorMessage: 'Invalid Token.'
     });
   }
 };

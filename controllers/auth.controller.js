@@ -9,14 +9,14 @@ exports.signup = async (req, res) => {
 
     if (user) {
       return res.status(400).json({
-        errorMessage: '이미 존재하는 email입니다. 다른 email로 시도해 주세요.'
+        errorMessage: 'Email address already taken.'
       });
     }
 
     bcrypt.hash(password, 12, async (err, hashedPassword) => {
       if (err) {
         return res.status(500).json({
-          errorMessage: '유저 정보를 저장하던 도중 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
+          errorMessage: 'Server error. Please try again.'
         });
       }
 
@@ -42,7 +42,7 @@ exports.signup = async (req, res) => {
         (err, token) => {
           if (err) {
             return res.status(500).json({
-              errorMessage: '서버에서 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
+              errorMessage: 'Server error. Please try again.'
             });
           }
 
@@ -52,7 +52,7 @@ exports.signup = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      errorMessage: '서버에서 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
+      errorMessage: 'Server error. Please try again.'
     });
   }
 };
@@ -64,7 +64,7 @@ exports.login = async (req, res) => {
 
     if (!user) {
       return res.status(400).json({
-        errorMessage: '존재하지 않는 유저입니다. email 주소를 다시 확인해주세요.'
+        errorMessage: 'Cannot find user.'
       });
     }
 
@@ -72,7 +72,7 @@ exports.login = async (req, res) => {
 
     if (!passwordValidation) {
       return res.status(400).json({
-        errorMessage: '올바르지 않은 비밀번호입니다. 비밀번호를 다시 확인해주세요.'
+        errorMessage: 'Invalid password.'
       });
     }
 
@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
       (err, token) => {
         if (err) {
           return res.status(500).json({
-            errorMessage: '서버에서 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
+            errorMessage: 'Server error. Please try again.'
           });
         }
 
@@ -97,7 +97,7 @@ exports.login = async (req, res) => {
     );
   } catch (error) {
     res.status(500).json({
-      errorMessage: '서버에서 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
+      errorMessage: 'Server error. Please try again.'
     });
   }
 };

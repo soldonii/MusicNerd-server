@@ -9,10 +9,6 @@ const userSchema = new Schema({
     lowercase: true,
     required: true
   },
-  gender: {
-    type: String,
-    required: true
-  },
   email: {
     type: String,
     trim: true,
