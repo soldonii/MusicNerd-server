@@ -10,7 +10,9 @@ const authController = require('../controllers/auth.controller');
 
 router.post('/signup', getSignupValidationRules(), validateUser, authController.signup);
 
-router.post('/login', getLoginValidationRules(), validateUser, /* authController.saveArtistsAndTracks, */ authController.login);
+// router.post('/login', getLoginValidationRules(), validateUser, authController.saveArtistsAndTracks, authController.login);
+
+router.post('/login', getLoginValidationRules(), validateUser, authController.login);
 
 module.exports = router;
 

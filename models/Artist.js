@@ -13,11 +13,15 @@ const artistSchema = new Schema ({
     url: String,
     width: Number,
   },
-  name: [String],
+  names: [String],
   genres: [String],
   tracks: [{
     type: Schema.Types.ObjectId,
     ref: 'Track'
+  }],
+  liked_by: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }]
 });
 
