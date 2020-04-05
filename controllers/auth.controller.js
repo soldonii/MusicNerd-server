@@ -44,7 +44,9 @@ exports.signup = async (req, res) => {
             });
           }
 
-          res.status(200).json({ token });
+          res.status(200).json({
+            result: 'ok'
+          });
         }
       );
     });

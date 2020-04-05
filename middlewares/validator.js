@@ -2,7 +2,7 @@ const { body, validationResult } = require('express-validator');
 
 const validationErrorMessages = {
   USERNAME: 'Username should be lowercase.',
-  EMAIL: 'Invalid Email address.',
+  EMAIL: 'Invalid email address.',
   PASSWORD: 'Password should be longer than 6 characters.',
   PASSWORD_CONFIRMATION: 'Password does not match.'
 };
@@ -11,9 +11,9 @@ const getSignupValidationRules = () => [
   body('username', validationErrorMessages.USERNAME).exists().isLowercase(),
   body('email', validationErrorMessages.EMAIL).exists().isEmail(),
   body('password', validationErrorMessages.PASSWORD).exists().isLength({ min: 6 }),
-  body('passwordConfirmation', validationErrorMessages.PASSWORD_CONFIRMATION)
+  body('confirmationPassword', validationErrorMessages.PASSWORD_CONFIRMATION)
     .exists()
-    .custom((value, { req }) => value === req.body.password)
+    .custom((confirmationPassword, { req }) => confirmationPassword === req.body.password)
 ];
 
 const getLoginValidationRules = () => [
@@ -22,7 +22,9 @@ const getLoginValidationRules = () => [
 ];
 
 const validateUser = (req, res, next) => {
+  console.log('req.body', req.body);
   const errors = validationResult(req);
+  console.log('errors', errors)
 
   if (errors.isEmpty()) {
     return next();

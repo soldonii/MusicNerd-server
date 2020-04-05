@@ -6,4 +6,6 @@ const userController = require('../controllers/user.controller');
 
 router.get('/:user_id/favorites', authenticateUser, userController.getFavoriteArtists);
 
+router.post('/:user_id/favorites', authenticateUser, userController.saveFavoriteArtists);
+
 module.exports = router;
