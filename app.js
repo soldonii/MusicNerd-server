@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
+const gameRouter = require('./routes/game');
 
 const app = express();
 const server = http.createServer(app);
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
+app.use('/games', gameRouter);
 
 app.use((req, res, next) => {
   next(new Error('invalid url'));

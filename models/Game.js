@@ -3,15 +3,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
-  name: {
+  game_title: {
     type: String,
     required: true,
     maxlength: 20,
     unique: true
-  },
-  genre: {
-    type: String,
-    required: true
   },
   thumbnail: {
     type: String,
