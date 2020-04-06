@@ -8,10 +8,14 @@ const cors = require('cors');
 
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
+const waitingRouter = require('./routes/waiting');
 const gameRouter = require('./routes/game');
 
 const app = express();
 const server = http.createServer(app);
+const io = require('socket.io')(server);
+
+app.set('io', io);
 
 app.use(cors());
 app.use(logger('dev'));
@@ -20,6 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
+app.use('/waiting', waitingRouter);
 app.use('/games', gameRouter);
 
 app.use((req, res, next) => {

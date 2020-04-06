@@ -45,7 +45,7 @@ exports.signup = async (req, res) => {
           }
 
           res.status(200).json({
-            result: 'ok'
+            result: 'success'
           });
         }
       );

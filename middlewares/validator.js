@@ -22,9 +22,7 @@ const getLoginValidationRules = () => [
 ];
 
 const validateUser = (req, res, next) => {
-  console.log('req.body', req.body);
   const errors = validationResult(req);
-  console.log('errors', errors)
 
   if (errors.isEmpty()) {
     return next();

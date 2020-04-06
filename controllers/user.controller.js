@@ -27,7 +27,7 @@ exports.saveFavoriteArtists = async (req, res, next) => {
     );
 
     res.status(200).json({
-      result: 'ok'
+      result: 'success'
     });
   } catch (err) {
     res.status(500).json({

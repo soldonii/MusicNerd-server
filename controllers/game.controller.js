@@ -1,36 +1,31 @@
-const User = require('../models/User');
 const Game = require('../models/Game');
 
-exports.getGames = async (req, res, next) => {
+exports.allowEnterGame = async (req, res) => {
   const { userId } = res.locals;
-};
-
-exports.makeGame = async (req, res) => {
-  const { userId, gameTitle } = req.body;
+  const io = req.app.get('io');
+  const { gameId } = req.body;
 
   try {
-    const newGame = await Game.create({
-      game_title: gameTitle,
-      thumbnail: `${process.env.AMAZON_S3_URI}/game_cover/gameCover${Math.floor(Math.random()*8)}.png`,
-      is_playing: false,
-      created_by: userId,
-      participants: [userId],
-      play_result: []
-    });
+    const targetGame = await Game.findById(gameId);
+    console.log('targetgame', targetGame);
+    const hasUserJoined = targetGame.participants.findIndex(id => id === userId);
 
+    if (hasUserJoined > -1) {
+      return res.status(400).json({
+        errorMessage: 'Cannot join the room.'
+      });
+    }
+
+    await targetGame.updateOne({ participants: [...targetGame.participants, userId] });
     res.status(200).json({
-      gameId: newGame._id,
-      gameTitle,
-      thumbnail: newGame.thumbnail,
-      isPlaying: false,
-      createdBy: userId,
-      participants: [userId],
-      playResult: []
+      result: 'success'
     });
   } catch (err) {
-    console.log('err', err);
+    console.log('error', err)
     res.status(500).json({
       errorMessage: 'Server error. Please try again.'
     });
   }
+
 };
+
