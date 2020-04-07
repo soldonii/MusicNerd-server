@@ -26,13 +26,14 @@ const gameSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }],
-  play_result: [{
-    userId: mongoose.Types.ObjectId,
-    score: {
-      type: Number,
-      required: true
-    }
-  }]
-});
+  score: {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    points: Number,
+    default: {}
+  }
+}, { minimize: false });
 
 module.exports = mongoose.model('Game', gameSchema);
