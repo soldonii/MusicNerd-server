@@ -9,8 +9,6 @@ router.get('/', authenticateUser, waitingController.getGames);
 
 router.post('/', authenticateUser, waitingController.makeGame);
 
-// router.get('/:gameId', authenticateUser, waitingController.enterGame);
-
-// router.post('/games/:gameId', authenticateUser, waitingController.makeGame);
+router.put('/', authenticateUser, waitingController.enterGame);
 
 module.exports = router;
