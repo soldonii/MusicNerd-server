@@ -162,7 +162,7 @@ exports.login = async (req, res) => {
 //       }
 
 //       for (const track of trackList) {
-//         const { trackId, titleList } = track;
+//         const { trackId, titleList, audio_url } = track;
 //         const trackResponse = await axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, {
 //           headers: { 'Authorization': `Bearer ${token}` }
 //         });
@@ -177,7 +177,7 @@ exports.login = async (req, res) => {
 //             thumbnail: albumImageList[0],
 //             release_date,
 //             artist: newArtist._id,
-//             audio_url: '123123'
+//             audio_url
 //           });
 
 //           tracks.push(newTrack._id);

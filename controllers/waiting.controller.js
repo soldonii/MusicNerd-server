@@ -68,12 +68,6 @@ exports.enterGame = async (req, res) => {
       });
     }
 
-    // 방에 입장할 수 있는 경우(정원 8명 이하인 경우)
-    // const { username, thumbnail_url } = currentUser;
-    // await targetGame.updateOne({
-    //   participants: [ ...targetGame.participants, { userId, username, thumbnail_url } ]
-    // });
-
     res.status(200).json({
       result: 'success'
     });

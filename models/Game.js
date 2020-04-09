@@ -34,7 +34,11 @@ const gameSchema = new Schema({
     thumbnail_url: {
       type: String,
       required: true
-    }
+    },
+    favorite_artists: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Artist'
+    }]
   }],
   score: {
     userId: {
