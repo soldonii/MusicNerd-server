@@ -6,15 +6,16 @@ const User = require('../models/User');
 exports.signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const user = await User.findOne({ email });
+    const userFindByEmail = await User.findOne({ email });
+    const userFindByUsername = await User.findOne({ username });
 
-    if (user) {
+    if (userFindByEmail) {
       return res.status(400).json({
         errorMessage: 'Email address already taken.'
       });
     }
 
-    if (username === user.username) {
+    if (userFindByUsername) {
       return res.status(400).json({
         errorMessage: 'Username already taken.'
       });

@@ -34,19 +34,6 @@ exports.makeGame = async (req, res) => {
       score: {}
     });
 
-    // const newGame = await Game.create({
-    //   game_title: gameTitle,
-    //   thumbnail_url: `${process.env.AMAZON_S3_URI}/game_cover/gameCover${Math.floor(Math.random()*6)}.jpg`,
-    //   is_playing: false,
-    //   created_by: userId,
-    //   participants: [{
-    //     userId: userId,
-    //     username: user.username,
-    //     thumbnail_url: user.thumbnail_url
-    //   }],
-    //   score: {}
-    // });
-
     res.status(200).json({
       gameId: newGame._id
     });
