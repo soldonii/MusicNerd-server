@@ -9,7 +9,7 @@ const gameSchema = new Schema({
     maxlength: 20,
     unique: true
   },
-  thumbnail: {
+  thumbnail_url: {
     type: String,
     required: true
   },
@@ -23,8 +23,18 @@ const gameSchema = new Schema({
     ref: 'User'
   },
   participants: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    thumbnail_url: {
+      type: String,
+      required: true
+    }
   }],
   score: {
     userId: {
