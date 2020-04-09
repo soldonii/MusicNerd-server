@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
 
-const authenticateUser = require('../middlewares/authentication');
-const gameController = require('../controllers/game.controller');
+// const authenticateUser = require('../middlewares/authentication');
+// const gameController = require('../controllers/game.controller');
 
-router.put('/', authenticateUser, gameController.allowEnterGame);
+// router.get('/:gameId', authenticateUser, gameController.makeConnection);
 
-module.exports = router;
+// module.exports = router;

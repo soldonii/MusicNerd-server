@@ -9,7 +9,7 @@ const gameSchema = new Schema({
     maxlength: 20,
     unique: true
   },
-  thumbnail: {
+  thumbnail_url: {
     type: String,
     required: true
   },
@@ -23,16 +23,27 @@ const gameSchema = new Schema({
     ref: 'User'
   },
   participants: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  play_result: [{
-    userId: mongoose.Types.ObjectId,
-    score: {
-      type: Number,
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    thumbnail_url: {
+      type: String,
       required: true
     }
-  }]
-});
+  }],
+  score: {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    points: Number,
+    default: {}
+  }
+}, { minimize: false });
 
 module.exports = mongoose.model('Game', gameSchema);

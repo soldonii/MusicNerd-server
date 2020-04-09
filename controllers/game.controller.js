@@ -1,31 +1,37 @@
-const Game = require('../models/Game');
+// const User = require('../models/User');
+// const Game = require('../models/Game');
 
-exports.allowEnterGame = async (req, res) => {
-  const { userId } = res.locals;
-  const io = req.app.get('io');
-  const { gameId } = req.body;
+// const gameInfo = {};
 
-  try {
-    const targetGame = await Game.findById(gameId);
-    console.log('targetgame', targetGame);
-    const hasUserJoined = targetGame.participants.findIndex(id => id === userId);
+// exports.makeConnection = async (req, res) => {
+//   const io = req.app.get('io');
+//   const { gameId } = req.params;
+//   const { userId } = res.locals;
 
-    if (hasUserJoined > -1) {
-      return res.status(400).json({
-        errorMessage: 'Cannot join the room.'
-      });
-    }
+//   const user = await User.findById(userId);
+//   const game = await Game.findById(gameId);
+//   const { username, thumbnail_url: thumbnailUrl } = user;
 
-    await targetGame.updateOne({ participants: [...targetGame.participants, userId] });
-    res.status(200).json({
-      result: 'success'
-    });
-  } catch (err) {
-    console.log('error', err)
-    res.status(500).json({
-      errorMessage: 'Server error. Please try again.'
-    });
-  }
+//   res.status(200).json({ game, user: { username, thumbnailUrl } });
 
-};
+//   io.on('connect', socket => {
+//     // console.log('connected1') 여긴 들어옴.
+//     socket.on('enterRoom', message => {
+//       console.log('enterRoom', enterRoom)
+//       socket.join(gameId, () => {
+//         gameInfo[gameId] = {};
+//         let rooms = Object.keys(socket.rooms);
+//         console.log('message', message);
 
+//         console.log('rooms', rooms);
+//         console.log(`A ${username} has been joined to ${gameId} socket room!`);
+//         gameInfo[gameId][users] = username;
+//         console.log('gameInfo', gameInfo);
+
+//         io.to(gameId).emit(`${username} has joined to the room.`);
+//       });
+//     });
+//   });
+// }
+
+// // user join할 때마다, 해당 user의 favoriteArtist를 중복 제거하여 모아두어야 함
