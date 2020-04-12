@@ -39,15 +39,7 @@ const gameSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Artist'
     }]
-  }],
-  score: {
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    },
-    points: Number,
-    default: {}
-  }
-}, { minimize: false });
+  }]
+});
 
 module.exports = mongoose.model('Game', gameSchema);

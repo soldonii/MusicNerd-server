@@ -8,7 +8,7 @@ const validationMessages = {
 };
 
 const getSignupValidationRules = () => [
-  body('username', validationMessages.USERNAME).exists().isLowercase(),
+  body('username', validationMessages.USERNAME).exists().isLength({ max: 8 }),
   body('email', validationMessages.EMAIL).exists().isEmail(),
   body('password', validationMessages.PASSWORD).exists().isLength({ min: 6 }),
   body('confirmationPassword', validationMessages.PASSWORD_CONFIRMATION)
