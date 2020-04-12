@@ -22,7 +22,7 @@ const gameSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  participants: [{
+  players: [{
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User'

@@ -21,7 +21,7 @@ exports.makeGame = async (req, res) => {
 
     if (game) {
       return res.status(400).json({
-        errorMessage: 'Same title already exists. Please try another game title.'
+        errorMessage: 'Same game title already exists.'
       });
     }
 
@@ -30,7 +30,7 @@ exports.makeGame = async (req, res) => {
       thumbnail_url: `${process.env.AMAZON_S3_URI}/game_cover/gameCover${Math.floor(Math.random()*6)}.jpg`,
       is_playing: false,
       created_by: userId,
-      participants: [],
+      players: [],
       score: {}
     });
 
@@ -50,10 +50,9 @@ exports.enterGame = async (req, res) => {
   const { gameId } = req.body;
 
   try {
-    const currentUser = await User.findById(userId);
     const targetGame = await Game.findById(gameId);
-    const hasUserJoined = targetGame.participants.findIndex(player => {
-      return player.userId.toString() === userId
+    const hasUserJoined = targetGame.players.findIndex(player => {
+      return player.userId.toString() === userId;
     }) > -1 ? true : false;
 
     if (hasUserJoined) {
@@ -62,7 +61,13 @@ exports.enterGame = async (req, res) => {
       });
     }
 
-    if (targetGame.participants.length >= 8) {
+    if (targetGame.is_playing) {
+      return res.status(400).json({
+        errorMessage: 'Game already starts.'
+      });
+    }
+
+    if (targetGame.players.length >= 8) {
       return res.status(400).json({
         errorMessage: 'Max capacity of room exceeds.'
       });
