@@ -1,4 +1,3 @@
-const User = require('../models/User');
 const Game = require('../models/Game');
 
 exports.getGames = async (req, res) => {
