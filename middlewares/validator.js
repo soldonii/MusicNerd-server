@@ -1,7 +1,7 @@
 const { body, validationResult } = require('express-validator');
 
 const validationMessages = {
-  USERNAME: 'Username should be lowercased.',
+  USERNAME: 'Username should be less than 8 characters.',
   EMAIL: 'Invalid email address.',
   PASSWORD: 'Password should be longer than 6 characters.',
   PASSWORD_CONFIRMATION: 'Password does not match.'
