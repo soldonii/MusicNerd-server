@@ -26,7 +26,7 @@ exports.makeGame = async (req, res) => {
 
     const newGame = await Game.create({
       game_title: gameTitle,
-      thumbnail_url: `${process.env.AMAZON_S3_URI}/game_cover/gameCover${Math.floor(Math.random()*6)}.jpg`,
+      thumbnail_url: `${process.env.AMAZON_S3_URI}/game_cover/gameCover${Math.floor(Math.random()*17)}.jpg`,
       is_playing: false,
       created_by: userId,
       players: [],
@@ -37,7 +37,6 @@ exports.makeGame = async (req, res) => {
       gameId: newGame._id
     });
   } catch (err) {
-    console.log('err', err);
     res.status(500).json({
       errorMessage: 'Server error. Please try again.'
     });
@@ -76,7 +75,6 @@ exports.enterGame = async (req, res) => {
       result: 'success'
     });
   } catch (err) {
-    console.log('error', err)
     res.status(500).json({
       errorMessage: 'Server error. Please try again.'
     });
