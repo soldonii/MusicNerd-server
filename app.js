@@ -22,6 +22,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/', (req, res) => res.status(200).json({ result: 'ok' }));
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/waiting', waitingRouter);
