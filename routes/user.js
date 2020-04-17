@@ -8,4 +8,6 @@ router.get('/:user_id/favorites', authenticateUser, userController.getFavoriteAr
 
 router.post('/:user_id/favorites', authenticateUser, userController.saveFavoriteArtists);
 
+router.get('/:user_id/profile', authenticateUser, userController.getProfile);
+
 module.exports = router;

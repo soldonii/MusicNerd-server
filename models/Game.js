@@ -22,7 +22,7 @@ const gameSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  participants: [{
+  players: [{
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User'
@@ -34,16 +34,12 @@ const gameSchema = new Schema({
     thumbnail_url: {
       type: String,
       required: true
-    }
-  }],
-  score: {
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
     },
-    points: Number,
-    default: {}
-  }
-}, { minimize: false });
+    favorite_artists: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Artist'
+    }]
+  }]
+});
 
 module.exports = mongoose.model('Game', gameSchema);

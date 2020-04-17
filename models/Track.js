@@ -24,10 +24,11 @@ const trackSchema = new Schema({
   },
   artist: {
     type: mongoose.Types.ObjectId,
+    ref: 'Artist',
     required: true
   },
   audio_url: {
-    type: String, // 예를 들면 "https://musicnerd.s3.ap-northeast-2.amazonaws.com/file_example_MP3_700KB.mp3"
+    type: String,
     required: true
   }
 });

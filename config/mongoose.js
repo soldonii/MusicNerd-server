@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI, {
+const url = process.env.NODE_ENV === 'dev' ? process.env.MONGODB_URI : process.env.MONGODB_URI_TEST;
+mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true
 });
 
-mongoose.connection.on('error', () => console.error('Connection Error!'));
-mongoose.connection.once('open', () => console.log('Connected!'));
+if (process.env.NODE_ENV === 'dev') {
+  mongoose.connection.on('error', () => console.error('Connection Error!'));
+  mongoose.connection.once('open', () => console.log('Connected!'));
+} else if (process.env.NODE_ENV === 'test') {
+  mongoose.connection.on('error', () => console.error('Connection Error!'));
+  mongoose.connection.once('open', () => console.log('Connected to test db!'));
+}
