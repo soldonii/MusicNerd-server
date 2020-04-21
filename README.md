@@ -1,4 +1,4 @@
-![cover](./readmeAssets/cover.png);
+![cover](./readmeAssets/cover.png)
 
 # MusicNerd
 
@@ -12,7 +12,7 @@
 - server: http://musicnerd-env.eba-key7sapf.ap-northeast-2.elasticbeanstalk.com
 - 현재 Amazon Certificate 관련 문제로 HTTPS 설정이 되지 않아 배포 링크로 게임 진행은 불가능합니다.
 
-![MusicNerd Preview](./readmeAssests/musicnerd.gif)
+![MusicNerd Preview](./readmeAssets/musicnerd.gif)
 
 ## 3. Features
 - Local 회원가입 및 로그인
