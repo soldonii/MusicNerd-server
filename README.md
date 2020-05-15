@@ -8,9 +8,8 @@
 
 ## 2. Preview
 **배포 링크**
-- client: https://xenodochial-clarke-1b25e1.netlify.app
-- server: http://musicnerd-env.eba-key7sapf.ap-northeast-2.elasticbeanstalk.com
-- 현재 Amazon Certificate 관련 문제로 HTTPS 설정이 되지 않아 배포 링크로 게임 진행은 불가능합니다.
+- client: https://www.musicnerd.site
+- server: https://api.musicnerd.site
 
 ![MusicNerd Preview](./readmeAssets/musicnerd.gif)
 
@@ -48,7 +47,7 @@ AMAZON_S3_URI=https://musicnerd.s3.ap-northeast-2.amazonaws.com
 ## 6. Installation
 ### Client
 ```
-git clone https://gitlab.com/soldonii/musicnerd_client.git
+git clone https://github.com/soldonii/MusicNerd-client.git
 cd musicnerd_client
 
 ## 위에서 생성한 .env 파일을 root 디렉토리에 추가합니다.
@@ -58,7 +57,7 @@ npm start
 
 ### Server
 ```
-git clone https://gitlab.com/soldonii/musicnerd_server.git
+git clone https://github.com/soldonii/MusicNerd-server.git
 cd musicnerd_server
 
 ## 위에서 생성한 .env 파일을 root 디렉토리에 추가합니다.
@@ -98,11 +97,8 @@ npm start
 - Task Control: Trello
 
 ## 9. Deployment
-### Client
-- Netlify
-
-### Server
-- Amazon Web Service(AWS) Elastic Beanstalk
+- Client: Netlify
+- Server: Amazon Web Service(AWS) Elastic Beanstalk
 
 ## 10. Challenges
 본격적으로 다뤄보지 못했던 socket을 프로젝트의 핵심 기술 중 하나로 활용하면서 수 많은 시행착오를 겪게 되었습니다. 2주 간의 프로젝트 기간 동안 가장 큰 병목이었던 socket과 관련된 다양한 시행착오 및 극복 방안을 정리하였습니다.
@@ -124,4 +120,4 @@ socket의 연결 타이밍 뿐 아니라, socket을 통해 client와 server가 �
 ## 11. Things to do
 - client socket 로직 redux middleware로 적용
 - React component 재사용성 높이기
-- client 최적화
+- client 게임 진행 시 성능 최적화
